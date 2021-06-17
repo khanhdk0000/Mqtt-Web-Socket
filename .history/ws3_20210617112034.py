@@ -60,7 +60,19 @@ prevLCD= resLCD
 timeLCD, prevTimeLCD = 0, 0
 
 # client = mqtt.Client()
+def firstMqtt(user, password):
+    def on_connect(client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
+        if rc == 0:
+            print('good')
+        else:
+            print('no good')
 
+    def on_disconnect(client, userdata, flags, rc=0):
+        print("Disconnected result code " + str(rc))
+
+    def on_message_light(client, userdata, message):
+        pass
 
 def mqttGet(user, password,topic,device):
 

@@ -102,8 +102,8 @@ def mqttGet(user, password,topic,device):
             resLCD = message
             timeLCD += 1
 
-    client = mqtt.Client(client_id=str(random.randint(0,1000)))
-    # global client
+    # client = mqtt.Client(client_id=str(random.randint(0,1000)))
+    global client
     client.username_pw_set(username=user,password=password)
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect

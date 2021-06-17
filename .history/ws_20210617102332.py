@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_sock import Sock
 import time
-import paho.mqtt.client as mqtt
 import random
 
 app = Flask(__name__)
@@ -59,11 +58,9 @@ resLCD = '"id":"3","name":"LCD","data":"0","unit":""'
 prevLCD= resLCD
 timeLCD, prevTimeLCD = 0, 0
 
-# client = mqtt.Client()
-
 
 def mqttGet(user, password,topic,device):
-
+    import paho.mqtt.client as mqtt
     def on_connect(client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
         if rc == 0:
@@ -102,8 +99,7 @@ def mqttGet(user, password,topic,device):
             resLCD = message
             timeLCD += 1
 
-    client = mqtt.Client(client_id=str(random.randint(0,1000)))
-    # global client
+    # client = mqtt.Client(client_id=str(random.randint(0,1000)))
     client.username_pw_set(username=user,password=password)
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect

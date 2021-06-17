@@ -60,7 +60,96 @@ prevLCD= resLCD
 timeLCD, prevTimeLCD = 0, 0
 
 # client = mqtt.Client()
+def firstMqtt(user, password):
+    def on_connect(client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
+        if rc == 0:
+            print('good')
+        else:
+            print('no good')
 
+    def on_disconnect(client, userdata, flags, rc=0):
+        print("Disconnected result code " + str(rc))
+
+    def on_message_light(client, userdata, message):
+        print(message.payload.decode("utf-8"))
+        global resLight, timeLight
+        message = str(message.payload.decode("utf-8"))
+        resLight = message
+        timeLight += 1
+
+    def on_message_sound(client, userdata, message):
+        print(message.payload.decode("utf-8"))
+        global resSound, timeSound
+        message = str(message.payload.decode("utf-8"))
+        resSound = message
+        timeSound += 1
+
+    ### topic message
+    def on_message(mosq, obj, msg):
+        print(msg.topic)
+
+    client = mqtt.Client()
+    client.username_pw_set(username=user,password=password)
+    client.on_connect = on_connect
+    client.on_disconnect = on_disconnect
+    client.on_message = on_message
+    client.message_callback_add(TOPIC + LIGHT, on_message_light)
+    client.message_callback_add(TOPIC + SOUND, on_message_sound)
+
+    client.connect(BROKER, 1883, 60)
+    client.subscribe("khanhdk0000/feeds/#")
+    client.loop_forever()
+
+
+def secondMqtt(user, password):
+    def on_connect(client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
+        if rc == 0:
+            print('good')
+        else:
+            print('no good')
+
+    def on_disconnect(client, userdata, flags, rc=0):
+        print("Disconnected result code " + str(rc))
+
+    def on_message_buzzer(client, userdata, message):
+        print(message.payload.decode("utf-8"))
+        global resBuzzer, timeBuzzer
+        message = str(message.payload.decode("utf-8"))
+        resBuzzer = message
+        timeBuzzer += 1
+
+    def on_message_lcd(client, userdata, message):
+        print(message.payload.decode("utf-8"))
+        global resLCD, timeLCD
+        message = str(message.payload.decode("utf-8"))
+        resLCD = message
+        timeLCD += 1
+
+    def on_message_temp(client, userdata, message):
+        print(message.payload.decode("utf-8"))
+        global resTemp, timeTemp
+        message = str(message.payload.decode("utf-8"))
+        resTemp = message
+        timeTemp += 1
+
+    ### topic message
+    def on_message(mosq, obj, msg):
+        print(msg.topic)
+
+    client = mqtt.Client()
+    client.username_pw_set(username=user,password=password)
+    client.on_connect = on_connect
+    client.on_disconnect = on_disconnect
+    client.on_message = on_message
+    client.message_callback_add(TOPIC + BUZZER, on_message_buzzer)
+    client.message_callback_add(TOPIC + LCD, on_message_lcd)
+    client.message_callback_add(TOPIC + LCD, on_message_lcd)
+
+    client.connect(BROKER, 1883, 60)
+    client.subscribe("khanhdk0000/feeds/#")
+    client.loop_forever()
 
 def mqttGet(user, password,topic,device):
 
@@ -114,25 +203,25 @@ def mqttGet(user, password,topic,device):
     client.subscribe(topic)
     client.loop_forever()
 
-t1 = threading.Thread(target=mqttGet, name=mqttGet, args=(USER, PASSWORD,TOPIC + LIGHT, LIGHT))
+t1 = threading.Thread(target=firstMqtt, name=firstMqtt, args=(USER, PASSWORD))
 t1.setDaemon(True)
 t1.start()
 
-t2 = threading.Thread(target=mqttGet, name=mqttGet, args=(USER, PASSWORD,TOPIC + TEMP, TEMP))
-t2.setDaemon(True)
-t2.start()
+# t2 = threading.Thread(target=mqttGet, name=mqttGet, args=(USER, PASSWORD,TOPIC + TEMP, TEMP))
+# t2.setDaemon(True)
+# t2.start()
 
-t3 = threading.Thread(target=mqttGet, name=mqttGet, args=(USER, PASSWORD,TOPIC + SOUND, SOUND))
-t3.setDaemon(True)
-t3.start()
+# t3 = threading.Thread(target=mqttGet, name=mqttGet, args=(USER, PASSWORD,TOPIC + SOUND, SOUND))
+# t3.setDaemon(True)
+# t3.start()
 
-t4 = threading.Thread(target=mqttGet, name=mqttGet, args=(USER, PASSWORD,TOPIC + BUZZER, BUZZER))
-t4.setDaemon(True)
-t4.start()
+# t4 = threading.Thread(target=mqttGet, name=mqttGet, args=(USER, PASSWORD,TOPIC + BUZZER, BUZZER))
+# t4.setDaemon(True)
+# t4.start()
 
-t5 = threading.Thread(target=mqttGet, name=mqttGet, args=(USER, PASSWORD,TOPIC + LCD, LCD))
-t5.setDaemon(True)
-t5.start()
+# t5 = threading.Thread(target=mqttGet, name=mqttGet, args=(USER, PASSWORD,TOPIC + LCD, LCD))
+# t5.setDaemon(True)
+# t5.start()
 
 
 def mqttPost(topic, user, password,payload):

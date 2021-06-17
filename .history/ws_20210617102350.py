@@ -59,7 +59,7 @@ resLCD = '"id":"3","name":"LCD","data":"0","unit":""'
 prevLCD= resLCD
 timeLCD, prevTimeLCD = 0, 0
 
-# client = mqtt.Client()
+client = mqtt.Client()
 
 
 def mqttGet(user, password,topic,device):
@@ -102,8 +102,7 @@ def mqttGet(user, password,topic,device):
             resLCD = message
             timeLCD += 1
 
-    client = mqtt.Client(client_id=str(random.randint(0,1000)))
-    # global client
+    # client = mqtt.Client(client_id=str(random.randint(0,1000)))
     client.username_pw_set(username=user,password=password)
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect

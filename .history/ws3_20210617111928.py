@@ -60,7 +60,8 @@ prevLCD= resLCD
 timeLCD, prevTimeLCD = 0, 0
 
 # client = mqtt.Client()
-
+def firstMqtt(user, password):
+    
 
 def mqttGet(user, password,topic,device):
 
