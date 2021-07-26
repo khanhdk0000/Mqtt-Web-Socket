@@ -12,31 +12,31 @@ sock = Sock(app)
 import threading
 
 BROKER = 'io.adafruit.com'
-USER = 'khanhdk0000'
-PASSWORD = 'aio_FfID10QWNVSKUC2j15nLtOSeckin'
+# USER = 'khanhdk0000'
+# PASSWORD = 'aio_SEJW997mEyVAkKmrJS8is1m5n6VH'
 
-TOPIC = 'khanhdk0000/feeds/'
-LIGHT = 'light'
-SOUND = 'sound'
-TEMP = 'temp'
-LCD = 'iot_led'
-BUZZER = 'buzzer'
+# TOPIC = 'khanhdk0000/feeds/'
+# LIGHT = 'light'
+# SOUND = 'sound'
+# TEMP = 'temp'
+# LCD = 'iot_led'
+# BUZZER = 'buzzer'
 
 ########
-# USER = 'CSE_BBC'
-# PASSWORD = 'aio_FfID10QWNVSKUC2j15nLtOSeckin'
-# TOPIC = 'CSE_BBC/feeds/'
+USER = 'CSE_BBC'
+PASSWORD = ''
+TOPIC = 'CSE_BBC/feeds/'
 
-# USER1 = 'CSE_BBC1'
-# PASSWORD1 = 'aio_FfID10QWNVSKUC2j15nLtOSeckin'
-# TOPIC1 = 'CSE_BBC1/feeds/'
+USER1 = 'CSE_BBC1'
+PASSWORD1 = ''
+TOPIC1 = 'CSE_BBC1/feeds/'
 
 
-# LIGHT = 'bk-iot-light'
-# SOUND = 'bk-iot-sound'
-# TEMP = 'bk-iot-temp-humid' ## CSE_BBC
-# LCD = 'bk-iot-lcd'        ## CSE_BBC
-# BUZZER = 'bk-iot-speaker'  ## CSE_BBC
+LIGHT = 'bk-iot-light'
+SOUND = 'bk-iot-sound'
+TEMP = 'bk-iot-temp-humid' ## CSE_BBC
+LCD = 'bk-iot-lcd'        ## CSE_BBC
+BUZZER = 'bk-iot-speaker'  ## CSE_BBC
 
 ########################################################
 resLight = '"id":"13","name":"LIGHT","data":"0","unit":""'
@@ -94,11 +94,11 @@ def firstMqtt(user, password):
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect
     client.on_message = on_message
-    client.message_callback_add(TOPIC + LIGHT, on_message_light)
-    client.message_callback_add(TOPIC + SOUND, on_message_sound)
+    client.message_callback_add(TOPIC1 + LIGHT, on_message_light)
+    client.message_callback_add(TOPIC1 + SOUND, on_message_sound)
 
     client.connect(BROKER, 1883, 60)
-    client.subscribe("khanhdk0000/feeds/#")
+    client.subscribe("CSE_BBC1/feeds/#")
     client.loop_forever()
 
 
@@ -148,7 +148,7 @@ def secondMqtt(user, password):
     client.message_callback_add(TOPIC + TEMP, on_message_temp)
 
     client.connect(BROKER, 1883, 60)
-    client.subscribe("khanhdk0000/feeds/#")
+    client.subscribe("CSE_BBC/feeds/#")
     client.loop_forever()
 
 def mqttGet(user, password,topic,device):
@@ -203,7 +203,7 @@ def mqttGet(user, password,topic,device):
     client.subscribe(topic)
     client.loop_forever()
 
-t1 = threading.Thread(target=firstMqtt, name=firstMqtt, args=(USER, PASSWORD))
+t1 = threading.Thread(target=firstMqtt, name=firstMqtt, args=(USER1, PASSWORD1))
 t1.setDaemon(True)
 t1.start()
 
