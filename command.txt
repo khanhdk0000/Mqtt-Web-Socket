@@ -1,0 +1,18 @@
+
+
+For light:
+    mosquitto_pub -h io.adafruit.com -p 1883 -u khanhdk0000 -P aio_SEJW997mEyVAkKmrJS8is1m5n6VH -t khanhdk0000/feeds/light -m '{"id":"13","name":"LIGHT","data":"75","unit":""}'
+
+    mosquitto_pub -h io.adafruit.com -p 1883 -u CSE_BBC1 -P key -t CSE_BBC1/feeds/bk-iot-light -m '{"id":"13","name":"LIGHT","data":"75","unit":""}'
+
+For sound:
+    mosquitto_pub -h io.adafruit.com -p 1883 -u khanhdk0000 -P aio_SEJW997mEyVAkKmrJS8is1m5n6VH -t khanhdk0000/feeds/sound -m '{"id":"12","name":"SOUND","data":"555","unit":""}'
+
+    mosquitto_pub -h io.adafruit.com -p 1883 -u CSE_BBC1 -P key -t CSE_BBC1/feeds/bk-iot-sound -m '{"id":"12","name":"SOUND","data":"555","unit":""}'
+
+
+For temp:
+    mosquitto_pub -h io.adafruit.com -p 1883 -u khanhdk0000 -P aio_SEJW997mEyVAkKmrJS8is1m5n6VH -t khanhdk0000/feeds/temp -m '{"id":"7","name":"TEMP-HUMID","data":"26-44","unit":"C-%"}'
+
+    mosquitto_pub -h io.adafruit.com -p 1883 -u CSE_BBC -P key -t CSE_BBC/feeds/bk-iot-temp-humid -m '{"id":"7","name":"TEMP-HUMID","data":"32-44","unit":"C-%"}'
+
